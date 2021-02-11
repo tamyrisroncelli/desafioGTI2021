@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+
+  <head>
+		<title>Desafio GTI</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">	
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  
+  <body>
+	<!-- Divisão Menu Inicial -->	
+	<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+					<div class="custom-menu">
+						<button type="button" id="sidebarCollapse" class="btn btn-primary">
+						  <i class="fa fa-bars"></i>
+						  <span class="sr-only">Menu</span>
+						</button>
+					</div>
+						<h1><a href="index.html" class="logo">Desafio GTI</a></h1>
+						<ul class="list-unstyled components mb-5">
+						  <li class="active">            
+							<a href="index.html"><span class="fa fa-sticky-note mr-3"></span> Cadastro</a>
+						  </li>
+						  <li>
+							<a href="listagem.html"><span class="fa fa-sticky-note mr-3"></span> Listagem</a>
+						  </li>          
+						</ul>
+			</nav>
+
+    <!-- Divisão Conteúdo  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			
+		
+
+	<!-- Grid contendo os itens da listagem -->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<h1 class="contextmenu" align="center"> Cadastro Produtos</h1>
+						<table id="grid" class="table table-striped">
+							<thead>
+								<tr>
+										<th>Nome</th>	
+										<th>Unidade de Medida</th>
+										<th>Quantidade</th>
+										<th>Preço</th>
+								</tr>						
+								<tr>
+									<th>
+										<input id="name" class="border border-dark" type="text" class="form-control" maxlength="50" required />
+									</th>
+									<th><select id="medida" name="medida"  class="border border-dark" type="text">
+										<option value="lt">Litro</option>
+										<option value="kg">Quilograma</option>
+										<option value="un">Unidadade</option>    
+									</th></select>
+									<th>
+										<input id="qtdade" class="border border-dark" type="number" min="1" class="form-control" required />
+									</th>								
+									<th>R$<input id="preco" class="border border-dark" type="price" min="1" class="form-control" maxlength="9" required />
+									</th> 								
+								</tr>
+								<tr>
+									<th>Data Fabricação</th>
+									<th>Data Validade</th>
+									<th>Produto Perecível</th>	
+									</th>
+								</tr>
+								<tr>
+									<th>
+										<input id="fabricacao" class="border border-dark" type="date" class="form-control" required />
+									</th>
+									<th>
+										<input id="validade" class="border border-dark" type="date" class="form-control" required />
+									</th>
+										<th><input id="perecivel" class="border border-dark" type="checkbox"  value="1" class="form-control" />Sim</th>
+									<th><input id="perecivel" class="border border-dark" type="checkbox"  value="0" class="form-control" />Não</th>
+									<th>
+	<!-- Botão Salvar -->
+										<button id="btn-add" class="border border-dark">Salvar</button>
+									</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+				</div>            
+			</div>
+		</div>
+	<!-- Script das funções -->
+	<script>
+        
+			window.onload = function () {
+				var localStorageKeyName = 'data';
+				
+
+				loadFromLocalStorage();
+				
+				document.querySelector("#btn-add").addEventListener('click', function () {
+					var name = document.getElementById("name"),
+						medida = document.getElementById("medida"),
+						qtdade = document.getElementById("qtdade"),
+						preco = document.getElementById("preco"), 
+						fabricacao  = document.getElementById("fabricacao"),
+						validade = document.getElementById("validade"),
+						perecivel = document.getElementById("perecivel");
+
+						
+						
+						if  (name.value.length === 0 || medida.value.length === 0 || !parseInt(qtdade.value) || preco.value.length === 0 || fabricacao.value.length === 0 || validade.value.length === 0 || perecivel.value.length === 0) return;
+						
+						
+
+						var user = {
+							name: name.value,					
+							medida: medida.value,
+							qtdade: qtdade.value,					
+							preco: preco.value,
+							fabricacao: fabricacao.value,
+							validade: validade.value,
+							perecivel: perecivel.value
+							
+						};
+					
+
+						// Limpar Dados
+						name.value = '';
+						medida.value = '';
+						qtdade.value = '';
+						preco.value = '';
+						fabricacao.value = '';
+						validade.value = '';
+						perecivel.value = '';
+
+						// Inclui no localStorage
+						appendObjectToLocalStorage(user);
+            })
+
+				function appendObjectToLocalStorage(obj) {
+					var users = [],
+						dataInLocalStorage = localStorage.getItem(localStorageKeyName);
+
+					if (dataInLocalStorage !== null) {
+						users = JSON.parse(dataInLocalStorage);
+					}
+
+					users.push(obj);
+
+					localStorage.setItem(localStorageKeyName, JSON.stringify(users));
+
+					loadFromLocalStorage();
+				}
+
+				function loadFromLocalStorage() {
+					var users = [],
+						dataInLocalStorage = localStorage.getItem(localStorageKeyName),
+						
+						gridBody = document.querySelector("#grid tbody");
+
+					if (dataInLocalStorage !== null) {
+						users = JSON.parse(dataInLocalStorage);
+					}
+
+                // Desenho da tabela
+                gridBody.innerHTML = '';
+
+                users.forEach(function (x, i) {
+                    var tr = document.createElement("tr"),
+                        tdName = document.createElement("td"),
+                        tdMedida = document.createElement("td"),
+                        tdQtdade = document.createElement("td"),
+						tdPreco = document.createElement("td"),
+						tdFabricacao = document.createElement("td"),
+						tdValidade = document.createElement("td"),
+						tdPerecivel = document.createElement("td"),
+                        tdRemove = document.createElement("td"),
+                        btnRemove = document.createElement("button");
+
+							tdName.innerHTML = x.name;
+							tdMedida.innerHTML = x.medida;
+							tdQtdade.innerHTML = x.qtdade;
+							tdPreco.innerHTML = x.preco;
+							tdFabricacao.innerHTML = x.fabricacao;
+							tdValidade.innerHTML = x.validade;
+							tdPerecivel.innerHTML = x.perecivel;
+
+							btnRemove.textContent = 'Remove';
+							btnRemove.className = 'btn btn-xs btn-danger';
+							btnRemove.addEventListener('click', function(){
+								removeFromLocalStorage(i);
+							});
+
+							tdRemove.appendChild(btnRemove);
+
+							tr.appendChild(tdName);
+							tr.appendChild(tdMedida);
+							tr.appendChild(tdQtdade);
+							tr.appendChild(tdPreco);
+							tr.appendChild(tdFabricacao);
+							tr.appendChild(tdValidade);
+							tr.appendChild(tdPerecivel);
+							tr.appendChild(tdRemove);
+
+							gridBody.appendChild(tr);
+                });
+            }
+
+            function removeFromLocalStorage(index){
+                var users = [],
+                    dataInLocalStorage = localStorage.getItem(localStorageKeyName);
+
+                users = JSON.parse(dataInLocalStorage);
+
+                users.splice(index, 1);
+
+                localStorage.setItem(localStorageKeyName, JSON.stringify(users));
+
+                loadFromLocalStorage();
+            }
+        }
+	
+				
+						
+						
+				
+	
+
+</script>	
+	
+	<script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>			
+     
+	
+</body>
+</html>

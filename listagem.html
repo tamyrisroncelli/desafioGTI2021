@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+  	<title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet"-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">	
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+		
+	<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+					<div class="custom-menu">
+						<button type="button" id="sidebarCollapse" class="btn btn-primary">
+						  <i class="fa fa-bars"></i>
+						  <span class="sr-only">Menu</span>
+						</button>
+					</div>
+				<h1><a href="index.html" class="logo">Desafio GTI</a></h1>
+			<ul class="list-unstyled components mb-5">
+			  <li class="active">            
+				<a href="index.html"><span class="fa fa-sticky-note mr-3"></span> Cadastro</a>
+			  </li>
+			  <li>
+				<a href="listagem.html"><span class="fa fa-sticky-note mr-3"></span> Listagem</a>
+			  </li>          
+			</ul>
+
+			</nav>
+
+        <!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			
+		
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <h1 class="contextmenu" align="center">Listagem Produtos</h1>
+
+                <table id="grid" class="table table-striped">
+				
+				
+				
+				<div id="list" class="row">
+	
+	<div class="table-responsive col-md-12">
+		<table class="table table-striped" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>Nome</th>								
+					<th>Quantidade</th>
+					<th>Unidade de Medida</th>
+					<th>Preço</th>
+					
+				</tr>
+			</thead>
+			<tbody id="grid">
+				<tr>
+					
+					
+				</tr>
+				<tr>
+					<td class="actions">
+					
+						<a class="btn btn-warning btn-xs" href="index.html">Editar</a>
+						<a class="btn btn-danger btn-xs"  id="btnExcluir" >Excluir</a>
+					</td>
+				</tr>
+			
+				
+				
+			</tbody>
+		</table>
+	</div>	
+</div> 
+				
+				
+				
+				
+                   
+                   
+		
+    <script>
+  
+	
+	
+	window.onload = function () {
+   
+		document.getElementById("data").innerHTML = localStorage.getItem(localStorageKeyName, "data");
+	}
+	
+
+                // Desenho da tabela
+                gridBody.innerHTML = '';
+
+                users.forEach(function (x, i) {
+                    var tr = document.createElement("tr"),
+                        tdName = document.createElement("td"),
+                        tdMedida = document.createElement("td"),
+                        tdQtdade = document.createElement("td"),
+						tdPreco = document.createElement("td"),
+						tdFabricacao = document.createElement("td"),
+						tdValidade = document.createElement("td"),
+						tdPerecivel = document.createElement("td"),
+                        tdRemove = document.createElement("td"),
+                        btnRemove = document.createElement("button");
+
+							tdName.innerHTML = x.name;
+							tdMedida.innerHTML = x.medida;
+							tdQtdade.innerHTML = x.qtdade;
+							tdPreco.innerHTML = x.preco;
+							tdFabricacao.innerHTML = x.fabricacao;
+							tdValidade.innerHTML = x.validade;
+							tdPerecivel.innerHTML = x.perecivel;
+
+							btnRemove.textContent = 'Remove';
+							btnRemove.className = 'btn btn-xs btn-danger';
+							btnRemove.addEventListener('click', function(){
+								removeFromLocalStorage(i);
+							});
+
+							tdRemove.appendChild(btnRemove);
+
+							tr.appendChild(tdName);
+							tr.appendChild(tdMedida);
+							tr.appendChild(tdQtdade);
+							tr.appendChild(tdPreco);
+							tr.appendChild(tdFabricacao);
+							tr.appendChild(tdValidade);
+							tr.appendChild(tdPerecivel);
+							tr.appendChild(tdRemove);
+
+							gridBody.appendChild(tr);
+                });
+            }
+
+            function removeFromLocalStorage(index){
+                var users = [],
+                    dataInLocalStorage = localStorage.getItem(localStorageKeyName);
+
+                users = JSON.parse(dataInLocalStorage);
+
+                users.splice(index, 1);
+
+                localStorage.setItem(localStorageKeyName, JSON.stringify(users));
+
+                loadFromLocalStorage();
+            }
+    </script>
+
+		
+		
+       
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
